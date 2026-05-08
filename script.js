@@ -16,6 +16,18 @@ $(document).ready(function () {
     }
 
     if (editingId) {
+      var editingTask = tasks.find(function (task) {
+        return task.id === editingId;
+      });
+
+      if (!editingTask || editingTask.completed) {
+        editingId = null;
+        clearForm();
+        renderTasks();
+        showToast("Completed tasks cannot be edited");
+        return;
+      }
+
       tasks = tasks.map(function (task) {
         if (task.id === editingId) {
           task.title = title;
@@ -81,6 +93,11 @@ $(document).ready(function () {
       return task;
     });
 
+    if (editingId === id) {
+      editingId = null;
+      clearForm();
+    }
+
     saveTasks();
     renderTasks();
   });
@@ -118,6 +135,11 @@ $(document).ready(function () {
     });
 
     if (!taskToEdit) {
+      return;
+    }
+
+    if (taskToEdit.completed) {
+      showToast("Completed tasks cannot be edited");
       return;
     }
 
@@ -253,6 +275,7 @@ $(document).ready(function () {
     var completedClass = task.completed ? " completed" : "";
     var importantClass = task.important ? " active" : "";
     var checked = task.completed ? "checked" : "";
+    var editButton = task.completed ? "" : '<button class="icon-btn edit-btn" type="button" title="Edit task">Edit</button>';
     var dateText = task.dueDate ? formatDate(task.dueDate) : "No due date";
     var overduePill = isOverdue(task) ? '<span class="pill overdue">Overdue</span>' : "";
 
@@ -272,7 +295,7 @@ $(document).ready(function () {
         '</div>' +
         '<div class="task-actions">' +
           '<button class="icon-btn important-btn' + importantClass + '" type="button" title="Toggle important">*</button>' +
-          '<button class="icon-btn edit-btn" type="button" title="Edit task">Edit</button>' +
+          editButton +
           '<button class="icon-btn delete-btn" type="button" title="Delete task">x</button>' +
         '</div>' +
       '</article>'
