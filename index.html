@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow To-Do</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div>
+          <h1>TaskFlow</h1>
+          <p>Plan the day with clarity.</p>
+        </div>
+      </div>
+
+      <div class="quick-stats">
+        <div>
+          <span id="totalTasks">0</span>
+          <small>Total</small>
+        </div>
+        <div>
+          <span id="doneTasks">0</span>
+          <small>Done</small>
+        </div>
+        <div>
+          <span id="todayTasks">0</span>
+          <small>Today</small>
+        </div>
+      </div>
+
+      <nav class="filter-nav" aria-label="Task filters">
+        <button class="filter-btn active" data-filter="all">All Tasks</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="today">Due Today</button>
+        <button class="filter-btn" data-filter="overdue">Overdue</button>
+        <button class="filter-btn" data-filter="important">Important</button>
+      </nav>
+
+      <div class="progress-card">
+        <div class="progress-top">
+          <span>Completion</span>
+          <strong id="progressText">0%</strong>
+        </div>
+        <div class="progress-track">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Personal command center</p>
+          <h2>Today's Focus</h2>
+        </div>
+        <button id="clearCompleted" class="ghost-btn" type="button">Clear Done</button>
+      </header>
+
+      <form id="taskForm" class="task-form">
+        <div class="field title-field">
+          <label for="taskTitle">Task</label>
+          <input id="taskTitle" type="text" placeholder="Add a new priority..." autocomplete="off" required>
+        </div>
+
+        <div class="field">
+          <label for="taskDate">Due</label>
+          <input id="taskDate" type="date">
+        </div>
+
+        <div class="field">
+          <label for="taskPriority">Priority</label>
+          <select id="taskPriority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="taskCategory">Category</label>
+          <select id="taskCategory">
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+            <option value="Study">Study</option>
+            <option value="Health">Health</option>
+          </select>
+        </div>
+
+        <button class="add-btn" type="submit">Add Task</button>
+      </form>
+
+      <section class="controls">
+        <div class="search-box">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="Search tasks, category, priority...">
+        </div>
+
+        <select id="sortSelect" aria-label="Sort tasks">
+          <option value="created">Newest first</option>
+          <option value="due">Due date</option>
+          <option value="priority">Priority</option>
+          <option value="name">Name A-Z</option>
+        </select>
+      </section>
+
+      <section id="taskList" class="task-list" aria-live="polite"></section>
+
+      <section id="emptyState" class="empty-state">
+        <div class="empty-icon">OK</div>
+        <h3>No tasks here</h3>
+        <p>Add a task or change your filter to see more.</p>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast">Saved</div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
